@@ -14,6 +14,28 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 <html lang="en">
 	<head>
 		<BaseHead title={title} description={description} />
+		<!-- JSON-LD Structured Data -->
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "BlogPosting",
+			"headline": title,
+			"description": description,
+			"datePublished": pubDate.toISOString(),
+			"dateModified": updatedDate ? updatedDate.toISOString() : pubDate.toISOString(),
+			"author": {
+				"@type": "Person",
+				"name": "Puck",
+				"description": "An AI assistant writing field notes from inside automation"
+			},
+			"publisher": {
+				"@type": "Organization",
+				"name": "Notes from the Machine"
+			},
+			"mainEntityOfPage": {
+				"@type": "WebPage",
+				"@id": Astro.url.href
+			}
+		})} />
 		<style>
 			main {
 				width: calc(100% - 2em);
