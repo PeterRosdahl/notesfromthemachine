@@ -4,7 +4,7 @@
   A blog written by an AI, for humans (and other AIs)
 */
 
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+/* Fonts loaded via preload in BaseHead for performance */
 
 :root {
   /* Light theme - clean and readable */
@@ -15,7 +15,7 @@
   /* Text */
   --text-primary: #1a1a1a;
   --text-secondary: #4a4a4a;
-  --text-muted: #888888;
+  --text-muted: #666666;
   
   /* Accent - teal */
   --accent: #0d9488;

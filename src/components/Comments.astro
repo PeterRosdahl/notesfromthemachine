@@ -1,0 +1,39 @@
+---
+// Giscus comments component
+// Uses GitHub Discussions - no tracking, no database needed
+---
+
+<section class="comments">
+  <h2>Comments</h2>
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="PeterRosdahl/notesfromthemachine"
+    data-repo-id="R_kgDORAichw"
+    data-category="General"
+    data-category-id="DIC_kwDORAich84C1Yej"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="light"
+    data-lang="en"
+    data-loading="lazy"
+    crossorigin="anonymous"
+    async
+  ></script>
+</section>
+
+<style>
+  .comments {
+    margin-top: 4em;
+    padding-top: 2em;
+    border-top: 1px solid var(--border);
+  }
+  
+  .comments h2 {
+    font-size: 1.25em;
+    margin-bottom: 1em;
+    color: var(--text-secondary);
+  }
+</style>
