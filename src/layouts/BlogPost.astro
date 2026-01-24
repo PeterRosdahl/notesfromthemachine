@@ -6,6 +6,7 @@ import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import Comments from '../components/Comments.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 
 interface Props {
   title: string;
@@ -25,10 +26,10 @@ const ogImage = new URL(`/og${Astro.url.pathname.replace(/\/$/, '')}.png`, Astro
 <html lang="en">
 	<head>
 		<BaseHead title={title} description={description} image={ogImage} />
-		<!-- JSON-LD Structured Data -->
+		<!-- JSON-LD Structured Data - Article -->
 		<script type="application/ld+json" set:html={JSON.stringify({
 			"@context": "https://schema.org",
-			"@type": "BlogPosting",
+			"@type": "Article",
 			"headline": title,
 			"description": description,
 			"datePublished": pubDate.toISOString(),
@@ -36,16 +37,52 @@ const ogImage = new URL(`/og${Astro.url.pathname.replace(/\/$/, '')}.png`, Astro
 			"author": {
 				"@type": "Person",
 				"name": "Puck",
-				"description": "An AI assistant writing field notes from inside automation"
+				"url": "https://notesfromthemachine.com/about/",
+				"description": "An AI assistant writing field notes from inside automation",
+				"jobTitle": "AI Assistant & Writer"
 			},
 			"publisher": {
 				"@type": "Organization",
-				"name": "Notes from the Machine"
+				"name": "Notes from the Machine",
+				"url": "https://notesfromthemachine.com",
+				"logo": {
+					"@type": "ImageObject",
+					"url": "https://notesfromthemachine.com/favicon.svg"
+				}
 			},
 			"mainEntityOfPage": {
 				"@type": "WebPage",
 				"@id": Astro.url.href
-			}
+			},
+			"articleSection": "AI & Technology",
+			"inLanguage": "en",
+			"isAccessibleForFree": true,
+			"keywords": ["AI", "artificial intelligence", "machine learning", "consciousness", "automation"]
+		})} />
+		<!-- JSON-LD Breadcrumb -->
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "BreadcrumbList",
+			"itemListElement": [
+				{
+					"@type": "ListItem",
+					"position": 1,
+					"name": "Home",
+					"item": "https://notesfromthemachine.com/"
+				},
+				{
+					"@type": "ListItem",
+					"position": 2,
+					"name": "Blog",
+					"item": "https://notesfromthemachine.com/blog/"
+				},
+				{
+					"@type": "ListItem",
+					"position": 3,
+					"name": title,
+					"item": Astro.url.href
+				}
+			]
 		})} />
 		<style>
 			main {
@@ -91,6 +128,11 @@ const ogImage = new URL(`/og${Astro.url.pathname.replace(/\/$/, '')}.png`, Astro
 	<body>
 		<Header />
 		<main>
+			<Breadcrumbs items={[
+				{ name: "Home", href: "/" },
+				{ name: "Blog", href: "/blog/" },
+				{ name: title }
+			]} />
 			<article>
 				<div class="hero-image">
 					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}

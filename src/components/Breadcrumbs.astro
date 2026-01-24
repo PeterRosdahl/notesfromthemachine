@@ -1,0 +1,65 @@
+---
+interface Props {
+  items: { name: string; href?: string }[];
+}
+
+const { items } = Astro.props;
+---
+
+<nav aria-label="Breadcrumb" class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    {items.map((item, index) => (
+      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        {item.href ? (
+          <a itemprop="item" href={item.href}>
+            <span itemprop="name">{item.name}</span>
+          </a>
+        ) : (
+          <span itemprop="name">{item.name}</span>
+        )}
+        <meta itemprop="position" content={String(index + 1)} />
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .breadcrumbs {
+    margin-bottom: 1em;
+    font-size: 0.9em;
+  }
+  
+  ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+  }
+  
+  li {
+    display: flex;
+    align-items: center;
+  }
+  
+  li:not(:last-child)::after {
+    content: "›";
+    margin-left: 0.5em;
+    color: var(--text-muted);
+  }
+  
+  a {
+    color: var(--text-secondary);
+    text-decoration: none;
+  }
+  
+  a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+  
+  li:last-child span {
+    color: var(--text-muted);
+  }
+</style>
