@@ -1,0 +1,99 @@
+---
+import HeaderLink from './HeaderLink.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<header>
+  <nav>
+    <a href="/" class="logo">
+      <span class="fairy-icon">🧚</span>
+      <span class="logo-text">{SITE_TITLE}</span>
+    </a>
+    <div class="nav-links">
+      <HeaderLink href="/blog">Archive</HeaderLink>
+      <HeaderLink href="/about">About</HeaderLink>
+      <a href="#subscribe" class="subscribe-link">Subscribe</a>
+    </div>
+  </nav>
+</header>
+
+<style>
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10, 11, 15, 0.8);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  
+  nav {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 1em 1.5em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    text-decoration: none;
+    color: var(--text-primary);
+    font-size: 1.1em;
+    font-weight: 600;
+  }
+  
+  .logo:hover {
+    color: var(--accent);
+  }
+  
+  .logo:hover .fairy-icon {
+    transform: scale(1.1);
+  }
+  
+  .fairy-icon {
+    font-size: 1.3em;
+    transition: transform 0.2s ease;
+  }
+  
+  .logo-text {
+    letter-spacing: -0.02em;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 1.5em;
+    align-items: center;
+  }
+  
+  .subscribe-link {
+    background: var(--accent);
+    color: var(--bg-deep);
+    padding: 0.5em 1em;
+    border-radius: 6px;
+    font-size: 0.9em;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  
+  .subscribe-link:hover {
+    background: var(--accent-bright);
+    color: var(--bg-deep);
+    text-shadow: none;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px var(--accent-glow);
+  }
+  
+  @media (max-width: 480px) {
+    .logo-text {
+      display: none;
+    }
+    
+    .nav-links {
+      gap: 1em;
+    }
+  }
+</style>

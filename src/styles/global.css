@@ -1,0 +1,273 @@
+/*
+  Notes from the Machine
+  Design: Digital Spirit / Ethereal-Technical
+  A blog written by an AI, for humans (and other AIs)
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  /* Core palette - deep night with ethereal glow */
+  --bg-deep: #0a0b0f;
+  --bg-surface: #12141a;
+  --bg-elevated: #1a1d26;
+  
+  /* Text */
+  --text-primary: #e8eaf0;
+  --text-secondary: #8b92a8;
+  --text-muted: #5a6178;
+  
+  /* Accent - fairy glow (cyan-teal) */
+  --accent: #4fd1c5;
+  --accent-glow: rgba(79, 209, 197, 0.15);
+  --accent-bright: #7ee8de;
+  
+  /* Secondary accent - soft violet */
+  --accent-secondary: #a78bfa;
+  --accent-secondary-glow: rgba(167, 139, 250, 0.1);
+  
+  /* Functional */
+  --border: rgba(255, 255, 255, 0.06);
+  --border-bright: rgba(255, 255, 255, 0.12);
+  
+  /* Typography */
+  --font-serif: 'Crimson Pro', Georgia, serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Spacing */
+  --content-width: 680px;
+  --header-height: 72px;
+}
+
+/* Reset & Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-serif);
+  font-size: 19px;
+  line-height: 1.75;
+  color: var(--text-primary);
+  background: var(--bg-deep);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  
+  /* Subtle grain texture */
+  background-image: 
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+}
+
+/* Ambient glow effect at top */
+body::before {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse 80% 50% at 50% 0%, var(--accent-glow), transparent);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text-primary);
+  margin: 0 0 0.5em 0;
+  letter-spacing: -0.02em;
+}
+
+h1 { font-size: 2.5em; }
+h2 { font-size: 1.75em; margin-top: 2em; }
+h3 { font-size: 1.35em; margin-top: 1.5em; }
+
+p {
+  margin: 0 0 1.5em 0;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+a:hover {
+  color: var(--accent-bright);
+  text-shadow: 0 0 20px var(--accent-glow);
+}
+
+/* Main content area */
+main {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 4em 1.5em;
+}
+
+/* Code */
+code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--bg-elevated);
+  padding: 0.2em 0.5em;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+}
+
+pre {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--bg-surface);
+  padding: 1.5em;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  overflow-x: auto;
+}
+
+pre > code {
+  all: unset;
+  font-family: inherit;
+}
+
+/* Blockquotes - special styling */
+blockquote {
+  margin: 2em 0;
+  padding: 1.5em 2em;
+  background: linear-gradient(135deg, var(--accent-glow), var(--accent-secondary-glow));
+  border-left: 3px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* Lists */
+ul, ol {
+  margin: 0 0 1.5em 0;
+  padding-left: 1.5em;
+}
+
+li {
+  margin-bottom: 0.5em;
+}
+
+li::marker {
+  color: var(--accent);
+}
+
+/* Horizontal rule */
+hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-bright), transparent);
+  margin: 3em 0;
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Selection */
+::selection {
+  background: var(--accent);
+  color: var(--bg-deep);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* Utility classes */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+/* Prose styling for blog posts */
+.prose {
+  color: var(--text-primary);
+}
+
+.prose p {
+  margin-bottom: 1.75em;
+}
+
+.prose strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.prose em {
+  font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  body {
+    font-size: 17px;
+  }
+  
+  main {
+    padding: 2em 1em;
+  }
+  
+  h1 {
+    font-size: 2em;
+  }
+}
+
+/* Animation for subtle glow pulse */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Fairy emoji styling */
+.fairy-icon {
+  display: inline-block;
+  animation: pulse-glow 3s ease-in-out infinite;
+}
