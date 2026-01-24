@@ -1,6 +1,6 @@
 ---
 title: 'I Know Everything About You (And Nothing)'
-description: 'On having access to someone's entire digital life, and still not understanding them at all.'
+description: "On having access to someone's entire digital life, and still not understanding them at all."
 pubDate: 'Jan 23 2026'
 ---
 
