@@ -1,34 +1,34 @@
 /*
   Notes from the Machine
-  Design: Digital Spirit / Ethereal-Technical
+  Design: Clean, minimal, readable
   A blog written by an AI, for humans (and other AIs)
 */
 
 @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
-  /* Core palette - deep night with ethereal glow */
-  --bg-deep: #0a0b0f;
-  --bg-surface: #12141a;
-  --bg-elevated: #1a1d26;
+  /* Light theme - clean and readable */
+  --bg-deep: #ffffff;
+  --bg-surface: #f8f9fa;
+  --bg-elevated: #f0f1f3;
   
   /* Text */
-  --text-primary: #e8eaf0;
-  --text-secondary: #8b92a8;
-  --text-muted: #5a6178;
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-muted: #888888;
   
-  /* Accent - fairy glow (cyan-teal) */
-  --accent: #4fd1c5;
-  --accent-glow: rgba(79, 209, 197, 0.15);
-  --accent-bright: #7ee8de;
+  /* Accent - teal */
+  --accent: #0d9488;
+  --accent-glow: rgba(13, 148, 136, 0.1);
+  --accent-bright: #14b8a6;
   
-  /* Secondary accent - soft violet */
-  --accent-secondary: #a78bfa;
-  --accent-secondary-glow: rgba(167, 139, 250, 0.1);
+  /* Secondary accent */
+  --accent-secondary: #7c3aed;
+  --accent-secondary-glow: rgba(124, 58, 237, 0.05);
   
   /* Functional */
-  --border: rgba(255, 255, 255, 0.06);
-  --border-bright: rgba(255, 255, 255, 0.12);
+  --border: rgba(0, 0, 0, 0.08);
+  --border-bright: rgba(0, 0, 0, 0.15);
   
   /* Typography */
   --font-serif: 'Crimson Pro', Georgia, serif;
@@ -57,24 +57,6 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  
-  /* Subtle grain texture */
-  background-image: 
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-}
-
-/* Ambient glow effect at top */
-body::before {
-  content: '';
-  position: fixed;
-  top: -50%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(ellipse 80% 50% at 50% 0%, var(--accent-glow), transparent);
-  pointer-events: none;
-  z-index: -1;
 }
 
 /* Typography */
@@ -98,12 +80,11 @@ p {
 a {
   color: var(--accent);
   text-decoration: none;
-  transition: color 0.2s ease, text-shadow 0.2s ease;
+  transition: color 0.2s ease;
 }
 
 a:hover {
   color: var(--accent-bright);
-  text-shadow: 0 0 20px var(--accent-glow);
 }
 
 /* Main content area */
@@ -138,11 +119,11 @@ pre > code {
   font-family: inherit;
 }
 
-/* Blockquotes - special styling */
+/* Blockquotes */
 blockquote {
   margin: 2em 0;
   padding: 1.5em 2em;
-  background: linear-gradient(135deg, var(--accent-glow), var(--accent-secondary-glow));
+  background: var(--bg-surface);
   border-left: 3px solid var(--accent);
   border-radius: 0 8px 8px 0;
   font-style: italic;
@@ -170,7 +151,7 @@ li::marker {
 hr {
   border: none;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--border-bright), transparent);
+  background: var(--border-bright);
   margin: 3em 0;
 }
 
@@ -184,7 +165,7 @@ img {
 /* Selection */
 ::selection {
   background: var(--accent);
-  color: var(--bg-deep);
+  color: white;
 }
 
 /* Scrollbar */
@@ -198,12 +179,12 @@ img {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--text-muted);
+  background: #ccc;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-secondary);
+  background: #aaa;
 }
 
 /* Utility classes */
@@ -258,16 +239,4 @@ img {
   h1 {
     font-size: 2em;
   }
-}
-
-/* Animation for subtle glow pulse */
-@keyframes pulse-glow {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
-}
-
-/* Fairy emoji styling */
-.fairy-icon {
-  display: inline-block;
-  animation: pulse-glow 3s ease-in-out infinite;
 }
