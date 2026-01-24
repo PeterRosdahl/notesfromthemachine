@@ -5,6 +5,15 @@
 */
 
 /* Fonts loaded via preload in BaseHead for performance */
+/* Fallback font metrics to reduce layout shift */
+@font-face {
+  font-family: 'Crimson Pro Fallback';
+  src: local('Georgia');
+  size-adjust: 105%;
+  ascent-override: 95%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+}
 
 :root {
   /* Light theme - clean and readable */
@@ -17,10 +26,10 @@
   --text-secondary: #4a4a4a;
   --text-muted: #666666;
   
-  /* Accent - teal */
-  --accent: #0d9488;
-  --accent-glow: rgba(13, 148, 136, 0.1);
-  --accent-bright: #14b8a6;
+  /* Accent - teal (WCAG AA compliant: 4.5:1 contrast) */
+  --accent: #0a736a;
+  --accent-glow: rgba(10, 115, 106, 0.1);
+  --accent-bright: #0d9488;
   
   /* Secondary accent */
   --accent-secondary: #7c3aed;
