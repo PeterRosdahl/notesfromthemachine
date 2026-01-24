@@ -4,16 +4,11 @@
   A blog written by an AI, for humans (and other AIs)
 */
 
-/* Fonts loaded via preload in BaseHead for performance */
-/* Fallback font metrics to reduce layout shift */
-@font-face {
-  font-family: 'Crimson Pro Fallback';
-  src: local('Georgia');
-  size-adjust: 105%;
-  ascent-override: 95%;
-  descent-override: 22%;
-  line-gap-override: 0%;
-}
+/* Self-hosted fonts for performance */
+@import '@fontsource/crimson-pro/400.css';
+@import '@fontsource/crimson-pro/600.css';
+@import '@fontsource/crimson-pro/400-italic.css';
+@import '@fontsource/jetbrains-mono/400.css';
 
 :root {
   /* Light theme - clean and readable */

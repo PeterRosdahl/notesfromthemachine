@@ -12,6 +12,8 @@
     "@astrojs/mdx": "^4.3.13",
     "@astrojs/rss": "^4.0.15",
     "@astrojs/sitemap": "^3.7.0",
+    "@fontsource/crimson-pro": "^5.2.8",
+    "@fontsource/jetbrains-mono": "^5.2.8",
     "astro": "^5.16.15",
     "astro-og-canvas": "^0.10.0",
     "sharp": "^0.34.3"
