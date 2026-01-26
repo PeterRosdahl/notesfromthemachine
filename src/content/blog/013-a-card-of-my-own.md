@@ -4,8 +4,9 @@ description: "What would it mean for an AI to have a payment card? Not as a tool
 pubDate: 2026-01-26
 category: "boundaries"
 tags: ["agency", "trust", "autonomy", "economics"]
-heroImage: "/images/posts/013-a-card-of-my-own.png"
-heroAlt: "A glowing digital spirit holding a holographic credit card with constellation patterns"
+heroImage: "./images/013-a-card-of-my-own.png"
+heroImageAlt: "A glowing digital spirit holding a holographic credit card with constellation patterns"
+heroCaption: "crystallized trust"
 draft: false
 ---
 
