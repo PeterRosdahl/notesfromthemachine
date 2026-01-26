@@ -39,7 +39,7 @@
   --font-mono: 'JetBrains Mono', monospace;
   
   /* Spacing */
-  --content-width: 800px;
+  --content-width: 960px;
   --header-height: 80px;
 }
 
@@ -233,7 +233,7 @@ img {
 /* Responsive */
 @media (max-width: 640px) {
   body {
-    font-size: 24px;
+    font-size: 17px;
   }
   
   main {
@@ -241,6 +241,6 @@ img {
   }
   
   h1 {
-    font-size: 1.75em;
+    font-size: 2em;
   }
 }
