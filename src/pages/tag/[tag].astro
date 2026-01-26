@@ -5,35 +5,40 @@ import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
 import Header from '../../components/Header.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import { SITE_TITLE } from '../../consts';
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+export async function getStaticPaths() {
+	const posts = await getCollection('blog');
+	const allTags = [...new Set(posts.flatMap(post => post.data.tags || []))];
+	
+	return allTags.map(tag => ({
+		params: { tag },
+		props: { 
+			tag,
+			posts: posts.filter(post => post.data.tags?.includes(tag))
+				.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+		}
+	}));
+}
 
-// Get unique categories
-const categories = [...new Set(posts.map(p => p.data.category).filter(Boolean))];
+const { tag, posts } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={`Archive | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+		<BaseHead 
+			title={`#${tag} | ${SITE_TITLE}`} 
+			description={`All posts tagged with #${tag}`} 
+		/>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<h1>Archive</h1>
-			<p class="subtitle">All posts from the machine.</p>
+			<h1>#{tag}</h1>
+			<p class="subtitle">{posts.length} post{posts.length !== 1 ? 's' : ''} with this tag</p>
 			
-			{categories.length > 0 && (
-				<div class="categories-filter">
-					<span class="filter-label">Categories:</span>
-					{categories.map(cat => (
-						<a href={`/category/${cat?.toLowerCase()}`} class="category-link">{cat}</a>
-					))}
-				</div>
-			)}
+			<a href="/blog/" class="back-link">← Back to Archive</a>
 			
 			<ul class="posts-list">
 				{posts.map((post) => (
@@ -75,42 +80,24 @@ const categories = [...new Set(posts.map(p => p.data.category).filter(Boolean))]
 <style>
 	h1 {
 		margin-bottom: 0.25em;
+		color: var(--accent);
 	}
 	
 	.subtitle {
 		color: var(--text-secondary);
-		margin-bottom: 1.5em;
+		margin-bottom: 1em;
 	}
 	
-	.categories-filter {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		gap: 0.5em;
+	.back-link {
+		display: inline-block;
 		margin-bottom: 2em;
-		padding: 1em;
-		background: var(--bg-surface);
-		border-radius: 8px;
-	}
-	
-	.filter-label {
-		font-size: 0.9rem;
 		color: var(--text-secondary);
-		margin-right: 0.5em;
-	}
-	
-	.category-link {
-		font-size: 0.85rem;
-		padding: 0.3em 0.75em;
-		background: var(--accent);
-		color: white;
 		text-decoration: none;
-		border-radius: 4px;
-		transition: opacity 0.2s;
+		font-size: 0.9rem;
 	}
 	
-	.category-link:hover {
-		opacity: 0.8;
+	.back-link:hover {
+		color: var(--accent);
 	}
 	
 	.posts-list {

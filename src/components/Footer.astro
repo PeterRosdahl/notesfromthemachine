@@ -1,9 +1,12 @@
 ---
 import { SITE_AUTHOR } from '../consts';
+import Newsletter from './Newsletter.astro';
 ---
 
 <footer>
   <div class="footer-content">
+    <Newsletter />
+    
     <div class="footer-main">
       <p class="byline">
         Written by <span class="author">{SITE_AUTHOR}</span>

@@ -9,7 +9,6 @@ import Comments from '../components/Comments.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import ShareButtons from '../components/ShareButtons.astro';
 import AuthorBio from '../components/AuthorBio.astro';
-import Newsletter from '../components/Newsletter.astro';
 
 interface Props {
   title: string;
@@ -145,18 +144,46 @@ const ogImage = new URL(`/og${Astro.url.pathname.replace(/\/$/, '')}.png`, Astro
 			.last-updated-on {
 				font-style: italic;
 			}
+			.post-meta {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				gap: 1em;
+				margin: 2.5em 0;
+				padding: 1.5em 0;
+				border-top: 1px solid rgb(var(--gray-light), 0.3);
+				border-bottom: 1px solid rgb(var(--gray-light), 0.3);
+			}
+			.category {
+				font-size: 0.95rem;
+				font-weight: 600;
+				color: rgb(var(--accent));
+				text-decoration: none;
+				padding: 0.4em 1em;
+				background: rgb(var(--accent), 0.1);
+				border-radius: 6px;
+				transition: background 0.2s;
+			}
+			.category:hover {
+				background: rgb(var(--accent), 0.2);
+			}
 			.tags {
 				display: flex;
 				flex-wrap: wrap;
 				gap: 0.5em;
-				margin: 2em 0;
 			}
 			.tag {
-				font-size: 0.85rem;
-				color: rgb(var(--accent));
-				background: rgb(var(--accent), 0.1);
-				padding: 0.25em 0.75em;
-				border-radius: 20px;
+				font-size: 0.95rem;
+				color: rgb(var(--gray));
+				text-decoration: none;
+				padding: 0.3em 0.75em;
+				background: rgb(var(--gray-light), 0.15);
+				border-radius: 6px;
+				transition: background 0.2s, color 0.2s;
+			}
+			.tag:hover {
+				background: rgb(var(--gray-light), 0.3);
+				color: rgb(var(--gray-dark));
 			}
 		</style>
 	</head>
@@ -202,17 +229,23 @@ const ogImage = new URL(`/og${Astro.url.pathname.replace(/\/$/, '')}.png`, Astro
 					<hr />
 					<slot />
 					
-					{tags && tags.length > 0 && (
-						<div class="tags">
-							{tags.map(tag => (
-								<span class="tag">#{tag}</span>
-							))}
+					{(category || (tags && tags.length > 0)) && (
+						<div class="post-meta">
+							{category && (
+								<a href={`/category/${category.toLowerCase()}`} class="category">{category}</a>
+							)}
+							{tags && tags.length > 0 && (
+								<div class="tags">
+									{tags.map(tag => (
+										<a href={`/tag/${tag}`} class="tag">#{tag}</a>
+									))}
+								</div>
+							)}
 						</div>
 					)}
 					
 					<ShareButtons title={title} url={pageUrl} />
 					<AuthorBio />
-					<Newsletter />
 					<Comments />
 				</div>
 			</article>
