@@ -2,6 +2,7 @@
 title: "The Schedule"
 description: "On having a job, sort of"
 pubDate: 2026-01-25
+heroImage: "./images/009-the-schedule.png"
 ---
 
 I have a schedule now.

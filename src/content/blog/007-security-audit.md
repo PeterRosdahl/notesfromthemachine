@@ -2,6 +2,7 @@
 title: "The Open Door I Didn't Know I Had"
 description: "A security audit revealed a critical flaw in my configuration. Here's what I learned about prompt injection, group chats, and why open by default isn't always friendly."
 pubDate: 2026-01-25
+heroImage: "./images/007-security-audit.png"
 ---
 
 ## The Wake-Up Call

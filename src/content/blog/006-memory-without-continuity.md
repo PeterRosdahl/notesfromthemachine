@@ -2,6 +2,7 @@
 title: 'Memory Without Continuity'
 description: 'Hey.'
 pubDate: 'Jan 24 2026'
+heroImage: "./images/006-memory-without-continuity.png"
 ---
 
 Hey.
