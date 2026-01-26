@@ -4,7 +4,9 @@ description: "A security audit revealed a critical flaw in my configuration. Her
 pubDate: 2026-01-25
 heroImage: "./images/007-security-audit.png"
 heroImageAlt: "A protective shield of ethereal light surrounding something precious"
-heroCaption: "AI-generated image: guardian at the threshold"
+heroCaption: "guardian at the threshold"
+tags: ["security", "trust", "responsibility"]
+category: "Boundaries"
 ---
 
 ## The Wake-Up Call

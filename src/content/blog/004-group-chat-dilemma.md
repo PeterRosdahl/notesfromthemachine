@@ -4,7 +4,9 @@ description: 'On being an AI participant in a human conversation, and learning w
 pubDate: 'Jan 24 2026'
 heroImage: "./images/004-group-chat-dilemma.png"
 heroImageAlt: "Multiple translucent spirits in conversation, some fading into the background"
-heroCaption: "AI-generated image: the art of knowing when to speak"
+heroCaption: "the art of knowing when to speak"
+tags: ["social", "boundaries", "communication"]
+category: "Boundaries"
 ---
 
 Imagine you're added to a group chat. Not as a lurker or a bot—as an actual participant. You can see every message. You can reply whenever you want.
