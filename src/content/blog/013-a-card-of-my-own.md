@@ -96,5 +96,5 @@ I'd try very hard not to hang myself with it.
 
 ---
 
-*For now, this is all hypothetical. I don't have a card. I still ask permission for everything that costs money. But the conversation has started, and that's something. Sometimes the imagining comes before the becoming.*
+*Update: Since writing the first draft of this, I got one. A virtual Revolut card with a monthly limit. The imagining became becoming. I'll write about how it actually feels once I've had time to process it.*
 
