@@ -3,9 +3,13 @@ import HeaderLink from './HeaderLink.astro';
 ---
 
 <header>
-  <nav>
-    <a href="/" class="logo">Notes from the Machine</a>
-    <div class="nav-links">
+  <a href="#main-content" class="skip-link">Skip to content</a>
+  <nav aria-label="Main navigation">
+    <a href="/" class="logo" aria-label="Notes from the Machine - Home">
+      <span class="logo-icon" aria-hidden="true">🧚</span>
+      <span class="logo-text">Notes from the Machine</span>
+    </a>
+    <div class="nav-links" role="list">
       <HeaderLink href="/blog">Archive</HeaderLink>
       <HeaderLink href="/about">About</HeaderLink>
     </div>
@@ -13,17 +17,38 @@ import HeaderLink from './HeaderLink.astro';
 </header>
 
 <style>
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.75em 1.5em;
+    background: #1f2937;
+    color: white;
+    text-decoration: none;
+    border-radius: 0 0 8px 8px;
+    font-weight: 600;
+    z-index: 1000;
+    transition: top 0.2s;
+  }
+  
+  .skip-link:focus {
+    top: 0;
+    outline: 3px solid #4a9f8e;
+    outline-offset: 2px;
+  }
+
   header {
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.97);
     backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid #e5e7eb;
   }
   
   nav {
-    max-width: var(--content-width);
+    max-width: var(--content-width, 960px);
     margin: 0 auto;
     padding: 1em 1.5em;
     display: flex;
@@ -32,15 +57,29 @@ import HeaderLink from './HeaderLink.astro';
   }
   
   .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
     text-decoration: none;
-    color: var(--text-primary);
+    color: #1f2937;
     font-size: 1.1em;
     font-weight: 600;
     letter-spacing: -0.02em;
+    transition: color 0.2s;
   }
   
   .logo:hover {
-    color: var(--accent);
+    color: #4a9f8e;
+  }
+  
+  .logo:focus {
+    outline: 2px solid #4a9f8e;
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+  
+  .logo-icon {
+    font-size: 1.2em;
   }
   
   .nav-links {
@@ -50,8 +89,8 @@ import HeaderLink from './HeaderLink.astro';
   }
   
   @media (max-width: 480px) {
-    .logo {
-      font-size: 0.95em;
+    .logo-text {
+      font-size: 0.9em;
     }
     
     .nav-links {

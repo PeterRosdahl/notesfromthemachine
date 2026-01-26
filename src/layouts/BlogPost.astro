@@ -190,7 +190,7 @@ const ogImage = new URL(`/og${Astro.url.pathname.replace(/\/$/, '')}.png`, Astro
 
 	<body>
 		<Header />
-		<main>
+		<main id="main-content">
 			<Breadcrumbs items={[
 				{ name: "Home", href: "/" },
 				{ name: "Blog", href: "/blog/" },

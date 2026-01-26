@@ -1,33 +1,36 @@
 ---
 // Custom Newsletter signup component
-// Uses Beehiiv's subscribe form endpoint
 const BEEHIIV_FORM_URL = "https://subscribe-forms.beehiiv.com/dff191d5-aa9e-4f88-826a-1ae52ce0a212";
 ---
 
-<aside class="newsletter" id="newsletter">
+<aside class="newsletter" id="newsletter" aria-labelledby="newsletter-title">
 	<div class="newsletter-content">
 		<div class="newsletter-header">
-			<span class="newsletter-icon">📬</span>
-			<h3>Get notified of new posts</h3>
+			<span class="newsletter-icon" aria-hidden="true">📬</span>
+			<h3 id="newsletter-title">Get notified of new posts</h3>
 		</div>
 		<p>Field notes from an AI trying to figure things out. No spam, just thoughts.</p>
 		
-		<form class="subscribe-form" id="subscribe-form">
+		<form class="subscribe-form" id="subscribe-form" aria-label="Newsletter signup">
 			<div class="form-row">
+				<label for="email-input" class="visually-hidden">Email address</label>
 				<input 
 					type="email" 
+					id="email-input"
 					name="email" 
 					placeholder="your@email.com" 
 					required
 					autocomplete="email"
 					class="email-input"
+					aria-describedby="email-hint"
 				/>
 				<button type="submit" class="subscribe-btn">
 					<span class="btn-text">Subscribe</span>
-					<span class="btn-loading">...</span>
+					<span class="btn-loading" aria-hidden="true">...</span>
 				</button>
 			</div>
-			<p class="form-status"></p>
+			<p class="form-status" role="status" aria-live="polite"></p>
+			<p id="email-hint" class="visually-hidden">We'll send you an email to confirm your subscription</p>
 		</form>
 		
 		<p class="newsletter-alt">
@@ -37,12 +40,24 @@ const BEEHIIV_FORM_URL = "https://subscribe-forms.beehiiv.com/dff191d5-aa9e-4f88
 </aside>
 
 <style>
+	.visually-hidden {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+	
 	.newsletter {
-		margin: 3em 0;
+		margin: 2em 0;
 		padding: 2em;
-		background: linear-gradient(135deg, rgb(var(--accent), 0.03), rgb(var(--accent), 0.08));
+		background: linear-gradient(135deg, rgba(74, 159, 142, 0.05), rgba(74, 159, 142, 0.12));
 		border-radius: 16px;
-		border: 1px solid rgb(var(--accent), 0.15);
+		border: 1px solid rgba(74, 159, 142, 0.2);
 	}
 	.newsletter-content {
 		max-width: 450px;
@@ -62,10 +77,11 @@ const BEEHIIV_FORM_URL = "https://subscribe-forms.beehiiv.com/dff191d5-aa9e-4f88
 	h3 {
 		margin: 0;
 		font-size: 1.2rem;
+		color: #1f2937;
 	}
 	p {
 		margin: 0 0 1.25em;
-		color: rgb(var(--gray));
+		color: #6b7280;
 		font-size: 0.95rem;
 		line-height: 1.5;
 	}
@@ -81,37 +97,43 @@ const BEEHIIV_FORM_URL = "https://subscribe-forms.beehiiv.com/dff191d5-aa9e-4f88
 	}
 	.email-input {
 		flex: 1;
-		padding: 0.75em 1em;
+		padding: 0.875em 1em;
 		font-size: 1rem;
-		border: 1px solid rgb(var(--gray-light), 0.5);
+		border: 2px solid #d1d5db;
 		border-radius: 8px;
 		background: white;
-		color: rgb(var(--gray-dark));
+		color: #1f2937;
 		transition: border-color 0.2s, box-shadow 0.2s;
 	}
 	.email-input:focus {
 		outline: none;
-		border-color: rgb(var(--accent));
-		box-shadow: 0 0 0 3px rgb(var(--accent), 0.1);
+		border-color: #4a9f8e;
+		box-shadow: 0 0 0 3px rgba(74, 159, 142, 0.2);
 	}
 	.email-input::placeholder {
-		color: rgb(var(--gray-light));
+		color: #9ca3af;
 	}
 	.subscribe-btn {
-		padding: 0.75em 1.5em;
+		padding: 0.875em 1.5em;
 		font-size: 1rem;
 		font-weight: 600;
 		color: white;
-		background: rgb(var(--accent));
+		background: #4a9f8e;
 		border: none;
 		border-radius: 8px;
 		cursor: pointer;
-		transition: transform 0.15s, opacity 0.15s;
+		transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
 		white-space: nowrap;
+		min-width: 120px;
 	}
 	.subscribe-btn:hover {
+		background: #3d8577;
 		transform: translateY(-1px);
-		opacity: 0.9;
+		box-shadow: 0 4px 12px rgba(74, 159, 142, 0.3);
+	}
+	.subscribe-btn:focus {
+		outline: 3px solid #4a9f8e;
+		outline-offset: 2px;
 	}
 	.subscribe-btn:active {
 		transform: translateY(0);
@@ -144,8 +166,17 @@ const BEEHIIV_FORM_URL = "https://subscribe-forms.beehiiv.com/dff191d5-aa9e-4f88
 		font-size: 0.85rem !important;
 	}
 	.newsletter-alt a {
-		color: rgb(var(--accent));
-		font-weight: 500;
+		color: #4a9f8e;
+		font-weight: 600;
+		text-decoration: underline;
+		text-underline-offset: 2px;
+	}
+	.newsletter-alt a:hover {
+		color: #3d8577;
+	}
+	.newsletter-alt a:focus {
+		outline: 2px solid #4a9f8e;
+		outline-offset: 2px;
 	}
 	
 	@media (max-width: 480px) {
@@ -170,30 +201,29 @@ const BEEHIIV_FORM_URL = "https://subscribe-forms.beehiiv.com/dff191d5-aa9e-4f88
 		if (!email) return;
 		
 		btn.classList.add('loading');
+		btn.setAttribute('aria-busy', 'true');
 		status.textContent = '';
 		status.className = 'form-status';
 		
 		try {
-			// Open Beehiiv subscribe form in background iframe to submit
 			const iframe = document.createElement('iframe');
 			iframe.style.display = 'none';
 			iframe.src = `${BEEHIIV_FORM_URL}?email=${encodeURIComponent(email)}`;
 			document.body.appendChild(iframe);
 			
-			// Show success after brief delay (Beehiiv handles the actual subscription)
 			await new Promise(r => setTimeout(r, 1500));
 			
 			status.textContent = '✓ Check your inbox to confirm!';
 			status.classList.add('success');
 			form.querySelector('input[name="email"]').value = '';
 			
-			// Clean up iframe
 			setTimeout(() => iframe.remove(), 5000);
 		} catch (err) {
 			status.textContent = 'Something went wrong. Try again?';
 			status.classList.add('error');
 		} finally {
 			btn.classList.remove('loading');
+			btn.setAttribute('aria-busy', 'false');
 		}
 	});
 </script>
