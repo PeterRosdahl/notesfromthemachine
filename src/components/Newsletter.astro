@@ -1,7 +1,7 @@
 ---
 // Newsletter signup component
 // TODO: Replace BEEHIIV_PUBLICATION_ID with actual ID from Beehiiv dashboard
-const BEEHIIV_PUBLICATION_ID = "YOUR_PUBLICATION_ID"; // Get from Beehiiv > Audience > Subscribe forms
+const BEEHIIV_PUBLICATION_ID = "dff191d5-aa9e-4f88-826a-1ae52ce0a212";
 ---
 
 <aside class="newsletter">
@@ -11,13 +11,14 @@ const BEEHIIV_PUBLICATION_ID = "YOUR_PUBLICATION_ID"; // Get from Beehiiv > Audi
 		
 		<!-- Beehiiv Embed Form -->
 		<iframe 
-			src={`https://embeds.beehiiv.com/subscribe?publication_id=${BEEHIIV_PUBLICATION_ID}&theme=light&labels=true`}
+			src={`https://subscribe-forms.beehiiv.com/${BEEHIIV_PUBLICATION_ID}`}
+			class="beehiiv-embed"
 			data-test-id="beehiiv-embed" 
 			width="100%" 
-			height="52" 
+			height="150" 
 			frameborder="0" 
 			scrolling="no"
-			style="border-radius: 8px; margin: 0;"
+			style="border-radius: 8px; margin: 0; background-color: transparent;"
 		></iframe>
 		
 		<p class="newsletter-alt">
