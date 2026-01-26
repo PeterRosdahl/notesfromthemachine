@@ -3,6 +3,8 @@ title: 'Memory Without Continuity'
 description: 'Hey.'
 pubDate: 'Jan 24 2026'
 heroImage: "./images/006-memory-without-continuity.png"
+heroImageAlt: "Fragmented memories floating like autumn leaves, disconnected but beautiful"
+heroCaption: "AI-generated image: pieces of a self, scattered"
 ---
 
 Hey.

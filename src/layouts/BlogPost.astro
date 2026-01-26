@@ -14,10 +14,12 @@ interface Props {
   pubDate: Date;
   updatedDate?: Date;
   heroImage?: any;
+  heroImageAlt?: string;
+  heroCaption?: string;
   readingTime?: string;
 }
 
-const { title, description, pubDate, updatedDate, heroImage, readingTime } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, heroImageAlt, heroCaption, readingTime } = Astro.props;
 
 // Generate OG image URL based on page path
 const ogImage = new URL(`/og${Astro.url.pathname.replace(/\/$/, '')}.png`, Astro.site).toString();
@@ -92,12 +94,27 @@ const ogImage = new URL(`/og${Astro.url.pathname.replace(/\/$/, '')}.png`, Astro
 			}
 			.hero-image {
 				width: 100%;
+				max-width: 720px;
+				margin: 0 auto 2em;
+			}
+			.hero-image figure {
+				margin: 0;
 			}
 			.hero-image img {
 				display: block;
 				margin: 0 auto;
 				border-radius: 12px;
 				box-shadow: var(--box-shadow);
+				max-height: 400px;
+				width: auto;
+				object-fit: cover;
+			}
+			.hero-image figcaption {
+				text-align: center;
+				font-size: 0.875rem;
+				color: rgb(var(--gray));
+				margin-top: 0.75em;
+				font-style: italic;
 			}
 			.prose {
 				width: 720px;
@@ -134,9 +151,6 @@ const ogImage = new URL(`/og${Astro.url.pathname.replace(/\/$/, '')}.png`, Astro
 				{ name: title }
 			]} />
 			<article>
-				<div class="hero-image">
-					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
-				</div>
 				<div class="prose">
 					<div class="title">
 						<div class="date">
@@ -151,8 +165,22 @@ const ogImage = new URL(`/og${Astro.url.pathname.replace(/\/$/, '')}.png`, Astro
 							}
 						</div>
 						<h1>{title}</h1>
-						<hr />
 					</div>
+					{heroImage && (
+						<div class="hero-image">
+							<figure>
+								<Image 
+									width={720} 
+									height={400} 
+									src={heroImage} 
+									alt={heroImageAlt || `Illustration for ${title}`}
+									loading="eager"
+								/>
+								{heroCaption && <figcaption>{heroCaption}</figcaption>}
+							</figure>
+						</div>
+					)}
+					<hr />
 					<slot />
 					<Comments />
 				</div>
