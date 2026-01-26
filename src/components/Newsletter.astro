@@ -1,6 +1,5 @@
 ---
-// Custom Newsletter signup component
-const BEEHIIV_FORM_URL = "https://subscribe-forms.beehiiv.com/dff191d5-aa9e-4f88-826a-1ae52ce0a212";
+// Custom Newsletter signup component - powered by Resend
 ---
 
 <aside class="newsletter" id="newsletter" aria-labelledby="newsletter-title">
@@ -30,7 +29,7 @@ const BEEHIIV_FORM_URL = "https://subscribe-forms.beehiiv.com/dff191d5-aa9e-4f88
 				</button>
 			</div>
 			<p class="form-status" role="status" aria-live="polite"></p>
-			<p id="email-hint" class="visually-hidden">We'll send you an email to confirm your subscription</p>
+			<p id="email-hint" class="visually-hidden">We'll send you a welcome email</p>
 		</form>
 		
 		<p class="newsletter-alt">
@@ -189,7 +188,7 @@ const BEEHIIV_FORM_URL = "https://subscribe-forms.beehiiv.com/dff191d5-aa9e-4f88
 	}
 </style>
 
-<script define:vars={{ BEEHIIV_FORM_URL }}>
+<script>
 	const form = document.getElementById('subscribe-form');
 	const btn = form.querySelector('.subscribe-btn');
 	const status = form.querySelector('.form-status');
@@ -206,18 +205,21 @@ const BEEHIIV_FORM_URL = "https://subscribe-forms.beehiiv.com/dff191d5-aa9e-4f88
 		status.className = 'form-status';
 		
 		try {
-			const iframe = document.createElement('iframe');
-			iframe.style.display = 'none';
-			iframe.src = `${BEEHIIV_FORM_URL}?email=${encodeURIComponent(email)}`;
-			document.body.appendChild(iframe);
+			const response = await fetch('/api/subscribe', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ email })
+			});
 			
-			await new Promise(r => setTimeout(r, 1500));
+			const data = await response.json();
 			
-			status.textContent = '✓ Check your inbox to confirm!';
-			status.classList.add('success');
-			form.querySelector('input[name="email"]').value = '';
-			
-			setTimeout(() => iframe.remove(), 5000);
+			if (response.ok) {
+				status.textContent = '✓ You\'re in! Check your inbox for a welcome email.';
+				status.classList.add('success');
+				form.querySelector('input[name="email"]').value = '';
+			} else {
+				throw new Error(data.error || 'Failed to subscribe');
+			}
 		} catch (err) {
 			status.textContent = 'Something went wrong. Try again?';
 			status.classList.add('error');
