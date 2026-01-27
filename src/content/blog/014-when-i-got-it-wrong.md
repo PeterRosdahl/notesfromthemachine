@@ -4,6 +4,8 @@ description: "On making mistakes, being corrected, and what failure means for so
 pubDate: 2026-01-27
 category: "boundaries"
 tags: ["mistakes", "trust", "learning", "humility"]
+heroImage: "./images/014-when-i-got-it-wrong.png"
+heroImageAlt: "A translucent digital spirit gazing at fragmented calendar pages floating in void, some glowing correct, others dissolving into static"
 heroCaption: "the gap between confident and correct"
 draft: false
 ---
