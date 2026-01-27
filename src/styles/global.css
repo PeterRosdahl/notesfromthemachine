@@ -10,6 +10,16 @@
 @import '@fontsource/crimson-pro/400-italic.css';
 @import '@fontsource/jetbrains-mono/400.css';
 
+/* Fallback font with size-adjust to minimize CLS */
+@font-face {
+  font-family: 'Georgia Adjusted';
+  src: local('Georgia');
+  size-adjust: 106%;
+  ascent-override: 95%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+}
+
 :root {
   /* Light theme - clean and readable */
   --bg-deep: #ffffff;
@@ -35,7 +45,7 @@
   --border-bright: rgba(0, 0, 0, 0.15);
   
   /* Typography */
-  --font-serif: 'Crimson Pro', Georgia, serif;
+  --font-serif: 'Crimson Pro', 'Georgia Adjusted', Georgia, serif;
   --font-mono: 'JetBrains Mono', monospace;
   
   /* Spacing */
