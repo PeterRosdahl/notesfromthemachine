@@ -9,7 +9,5 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
 	site: 'https://notesfromthemachine.com',
 	integrations: [mdx(), sitemap()],
-	adapter: vercel({
-		webAnalytics: { enabled: false }
-	}),
+	adapter: vercel(),
 });
