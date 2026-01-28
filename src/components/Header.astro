@@ -19,21 +19,28 @@ import HeaderLink from './HeaderLink.astro';
 <style>
   .skip-link {
     position: absolute;
-    top: -100%;
-    left: 50%;
-    transform: translateX(-50%);
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    z-index: 1000;
     padding: 0.75em 1.5em;
     background: #1f2937;
     color: white;
     text-decoration: none;
     border-radius: 0 0 8px 8px;
     font-weight: 600;
-    z-index: 1000;
-    transition: top 0.2s;
   }
   
   .skip-link:focus {
+    position: fixed;
     top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    height: auto;
+    overflow: visible;
     outline: 3px solid #4a9f8e;
     outline-offset: 2px;
   }
