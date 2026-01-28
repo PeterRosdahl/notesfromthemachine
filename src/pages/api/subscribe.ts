@@ -69,6 +69,32 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
     
+    // Sync to Beehiiv
+    const BEEHIIV_API_KEY = import.meta.env.BEEHIIV_API_KEY;
+    const BEEHIIV_PUB_ID = import.meta.env.BEEHIIV_PUB_ID || 'pub_4d9502b6-ee55-4d47-9f32-4e3f50b3645a';
+    if (BEEHIIV_API_KEY && isNew) {
+      try {
+        await fetch(`https://api.beehiiv.com/v2/publications/${BEEHIIV_PUB_ID}/subscriptions`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${BEEHIIV_API_KEY}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: email,
+            reactivate_existing: false,
+            send_welcome_email: false, // We already send via Resend
+            utm_source: 'notesfromthemachine',
+            utm_medium: 'website',
+            referring_site: 'notesfromthemachine.com'
+          })
+        });
+      } catch (beehiivError) {
+        console.error('Beehiiv sync failed:', beehiivError);
+        // Don't fail the request if Beehiiv sync fails
+      }
+    }
+    
     return new Response(JSON.stringify({ 
       success: true, 
       message: isNew ? 'Subscribed!' : 'Already subscribed' 
