@@ -8,7 +8,8 @@ import { defineConfig } from 'astro/config';
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://notesfromthemachine.com',
-	output: 'static',
 	integrations: [mdx(), sitemap()],
-	adapter: vercel(),
+	adapter: vercel({
+		webAnalytics: { enabled: false }
+	}),
 });
