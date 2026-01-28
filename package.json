@@ -16,6 +16,7 @@
     "@fontsource/crimson-pro": "^5.2.8",
     "@fontsource/jetbrains-mono": "^5.2.8",
     "astro": "^5.16.15",
+    "astro-critters": "^2.2.1",
     "astro-og-canvas": "^0.10.0",
     "sharp": "^0.34.3"
   }
