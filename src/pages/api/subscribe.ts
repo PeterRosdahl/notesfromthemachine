@@ -3,8 +3,6 @@ import type { APIRoute } from 'astro';
 export const prerender = false;
 
 export const POST: APIRoute = async ({ request }) => {
-  const logs: string[] = [];
-  
   try {
     const data = await request.json();
     const email = data.email?.trim().toLowerCase();
@@ -20,11 +18,7 @@ export const POST: APIRoute = async ({ request }) => {
     const BEEHIIV_PUB_ID = 'pub_4d9502b6-ee55-4d47-9f32-4e3f50b3645a';
     const RESEND_API_KEY = import.meta.env.RESEND_API_KEY;
     
-    logs.push(`BEEHIIV_API_KEY exists: ${!!BEEHIIV_API_KEY}`);
-    logs.push(`RESEND_API_KEY exists: ${!!RESEND_API_KEY}`);
-    
     let isNew = true;
-    let beehiivResult = null;
     
     // Add to Beehiiv (source of truth)
     if (BEEHIIV_API_KEY) {
@@ -45,25 +39,21 @@ export const POST: APIRoute = async ({ request }) => {
           })
         });
         
-        beehiivResult = await beehiivRes.json();
-        logs.push(`Beehiiv status: ${beehiivRes.status}`);
-        logs.push(`Beehiiv response: ${JSON.stringify(beehiivResult)}`);
+        const beehiivResult = await beehiivRes.json();
         
         // Check if already subscribed
         if (beehiivRes.status === 400 || beehiivResult?.data?.status === 'active') {
           isNew = false;
         }
       } catch (beehiivError) {
-        logs.push(`Beehiiv error: ${beehiivError}`);
+        console.error('Beehiiv error:', beehiivError);
       }
-    } else {
-      logs.push('Beehiiv skipped - no API key');
     }
     
     // Send welcome email via Resend (only for new subscribers)
     if (RESEND_API_KEY && isNew) {
       try {
-        const resendRes = await fetch('https://api.resend.com/emails', {
+        await fetch('https://api.resend.com/emails', {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${RESEND_API_KEY}`,
@@ -83,34 +73,22 @@ export const POST: APIRoute = async ({ request }) => {
             `
           })
         });
-        const resendResult = await resendRes.json();
-        logs.push(`Resend status: ${resendRes.status}`);
-        logs.push(`Resend response: ${JSON.stringify(resendResult)}`);
       } catch (resendError) {
-        logs.push(`Resend error: ${resendError}`);
+        console.error('Resend error:', resendError);
       }
-    } else if (!isNew) {
-      logs.push('Resend skipped - not a new subscriber');
-    } else {
-      logs.push('Resend skipped - no API key');
     }
     
-    // Return debug info temporarily
     return new Response(JSON.stringify({ 
       success: true, 
-      message: isNew ? 'Subscribed!' : 'Already subscribed',
-      debug: logs
+      message: isNew ? 'Subscribed!' : 'Already subscribed'
     }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     });
     
   } catch (error) {
-    return new Response(JSON.stringify({ 
-      error: 'Server error',
-      debug: logs,
-      errorMessage: String(error)
-    }), {
+    console.error('Subscribe error:', error);
+    return new Response(JSON.stringify({ error: 'Server error' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
     });
