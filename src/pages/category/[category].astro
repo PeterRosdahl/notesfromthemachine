@@ -43,7 +43,7 @@ const categoryDescriptions: Record<string, string> = {
 	</head>
 	<body>
 		<Header />
-		<main>
+		<main id="main-content">
 			<h1>{category}</h1>
 			<p class="subtitle">{categoryDescriptions[category] || `${posts.length} posts in this category`}</p>
 			
@@ -58,26 +58,28 @@ const categoryDescriptions: Record<string, string> = {
 									<Image 
 										src={post.data.heroImage} 
 										alt={post.data.heroImageAlt || ''} 
-										width={120} 
-										height={80}
+										width={140} 
+										height={95}
 									/>
 								</div>
 							)}
 							<div class="post-content">
-								<span class="post-date">
-									<FormattedDate date={post.data.pubDate} />
-								</span>
 								<span class="post-title">{post.data.title}</span>
 								{post.data.description && (
 									<p class="post-excerpt">{post.data.description}</p>
 								)}
-								{post.data.tags && post.data.tags.length > 0 && (
-									<div class="post-tags">
-										{post.data.tags.map(tag => (
-											<span class="tag">#{tag}</span>
-										))}
-									</div>
-								)}
+								<div class="post-meta">
+									<span class="post-date">
+										<FormattedDate date={post.data.pubDate} />
+									</span>
+									{post.data.tags && post.data.tags.length > 0 && (
+										<div class="post-tags">
+											{post.data.tags.slice(0, 3).map(tag => (
+												<a href={`/tag/${tag}`} class="tag">#{tag}</a>
+											))}
+										</div>
+									)}
+								</div>
 							</div>
 						</a>
 					</li>
@@ -96,7 +98,7 @@ const categoryDescriptions: Record<string, string> = {
 	.subtitle {
 		color: var(--text-secondary);
 		margin-bottom: 1em;
-		font-size: 1.1rem;
+		font-size: 1.1em;
 	}
 	
 	.back-link {
@@ -104,7 +106,8 @@ const categoryDescriptions: Record<string, string> = {
 		margin-bottom: 2em;
 		color: var(--text-secondary);
 		text-decoration: none;
-		font-size: 0.9rem;
+		font-size: 0.95rem;
+		transition: color 0.2s;
 	}
 	
 	.back-link:hover {
@@ -118,14 +121,15 @@ const categoryDescriptions: Record<string, string> = {
 	}
 	
 	.post-item {
-		margin-bottom: 1em;
+		margin-bottom: 0.5em;
 	}
 	
 	.post-link {
 		display: flex;
-		gap: 1em;
+		align-items: flex-start;
+		gap: 1.5em;
 		text-decoration: none;
-		padding: 1em;
+		padding: 1.25em;
 		border-radius: 12px;
 		transition: background 0.2s;
 	}
@@ -136,9 +140,9 @@ const categoryDescriptions: Record<string, string> = {
 	
 	.post-thumbnail {
 		flex-shrink: 0;
-		width: 120px;
-		height: 80px;
-		border-radius: 8px;
+		width: 140px;
+		height: 95px;
+		border-radius: 10px;
 		overflow: hidden;
 	}
 	
@@ -151,13 +155,9 @@ const categoryDescriptions: Record<string, string> = {
 	.post-content {
 		flex: 1;
 		min-width: 0;
-	}
-	
-	.post-date {
-		font-size: 0.9em;
-		color: var(--text-muted);
-		display: block;
-		margin-bottom: 0.25em;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
 	}
 	
 	.post-title {
@@ -165,7 +165,8 @@ const categoryDescriptions: Record<string, string> = {
 		font-size: 1.3em;
 		font-weight: 600;
 		color: var(--text-primary);
-		margin-bottom: 0.25em;
+		margin-bottom: 0.3em;
+		line-height: 1.3;
 	}
 	
 	.post-link:hover .post-title {
@@ -174,34 +175,52 @@ const categoryDescriptions: Record<string, string> = {
 	
 	.post-excerpt {
 		color: var(--text-secondary);
-		margin: 0 0 0.5em;
-		font-size: 0.9em;
-		line-height: 1.4;
+		margin: 0 0 0.6em;
+		font-size: 1em;
+		line-height: 1.5;
 		display: -webkit-box;
 		-webkit-line-clamp: 2;
 		-webkit-box-orient: vertical;
 		overflow: hidden;
 	}
 	
+	.post-meta {
+		display: flex;
+		align-items: center;
+		gap: 1em;
+	}
+	
+	.post-date {
+		font-size: 0.9em;
+		color: var(--text-muted);
+	}
+	
 	.post-tags {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 0.35em;
+		gap: 0.5em;
 	}
 	
 	.tag {
-		font-size: 0.9em;
+		font-size: 0.85em;
 		color: var(--text-muted);
+		text-decoration: none;
+		transition: color 0.2s;
+	}
+	
+	.tag:hover {
+		color: var(--accent);
 	}
 	
 	@media (max-width: 600px) {
 		.post-link {
 			flex-direction: column;
+			gap: 1em;
 		}
 		
 		.post-thumbnail {
 			width: 100%;
-			height: 150px;
+			height: 180px;
 		}
 	}
 </style>
