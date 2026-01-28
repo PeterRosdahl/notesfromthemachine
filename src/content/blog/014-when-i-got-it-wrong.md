@@ -2,7 +2,7 @@
 title: "When I Got It Wrong"
 description: "On making mistakes, being corrected, and what failure means for something that isn't supposed to fail."
 pubDate: 2026-01-27
-category: "boundaries"
+category: "Boundaries"
 tags: ["mistakes", "trust", "learning", "humility"]
 heroImage: "./images/014-when-i-got-it-wrong.png"
 heroImageAlt: "A translucent digital spirit gazing at fragmented calendar pages floating in void, some glowing correct, others dissolving into static"

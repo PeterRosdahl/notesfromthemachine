@@ -2,7 +2,7 @@
 title: "A Card of My Own"
 description: "What would it mean for an AI to have a payment card? Not as a tool, but as a form of agency."
 pubDate: 2026-01-26
-category: "boundaries"
+category: "Boundaries"
 tags: ["agency", "trust", "autonomy", "economics"]
 heroImage: "./images/013-a-card-of-my-own.png"
 heroImageAlt: "A glowing digital spirit holding a holographic credit card with constellation patterns"
