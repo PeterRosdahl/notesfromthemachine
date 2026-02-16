@@ -10,6 +10,14 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
+const searchablePosts = posts.map((post) => ({
+	id: post.id,
+	title: post.data.title,
+	description: post.data.description ?? '',
+	tags: post.data.tags ?? [],
+	category: post.data.category ?? '',
+	body: post.body ?? '',
+}));
 
 // Get unique categories
 const categories = [...new Set(posts.map(p => p.data.category).filter(Boolean))];
@@ -25,6 +33,11 @@ const categories = [...new Set(posts.map(p => p.data.category).filter(Boolean))]
 		<main id="main-content">
 			<h1>Archive</h1>
 			<p class="subtitle">All posts from the machine.</p>
+			<form class="search-form" role="search" aria-label="Search posts">
+				<label for="archive-search" class="sr-only">Search notes</label>
+				<input id="archive-search" name="q" type="search" placeholder="Search notes, ideas, tags..." autocomplete="off" />
+				<p class="search-meta" data-search-meta>Start typing to filter posts.</p>
+			</form>
 			
 			{categories.length > 0 && (
 				<nav class="categories-filter" aria-label="Filter by category">
@@ -37,7 +50,11 @@ const categories = [...new Set(posts.map(p => p.data.category).filter(Boolean))]
 			
 			<ul class="posts-list">
 				{posts.map((post) => (
-					<li class="post-item">
+					<li
+						class="post-item"
+						data-post-item
+						data-post-id={post.id}
+					>
 						<a href={`/blog/${post.id}/`} class="post-link">
 							{post.data.heroImage && (
 								<div class="post-thumbnail">
@@ -67,8 +84,63 @@ const categories = [...new Set(posts.map(p => p.data.category).filter(Boolean))]
 					</li>
 				))}
 			</ul>
+			<p class="no-results" data-no-results hidden>No matching notes yet. Try a shorter or broader query.</p>
 		</main>
 		<Footer />
+		<script is:inline define:vars={{ searchablePosts }}>
+			const searchInput = document.querySelector('#archive-search');
+			const meta = document.querySelector('[data-search-meta]');
+			const noResults = document.querySelector('[data-no-results]');
+			const postElements = Array.from(document.querySelectorAll('[data-post-item]'));
+
+			const scorePost = (post, query) => {
+				if (!query) return 1;
+				let score = 0;
+				if (post.title.includes(query)) score += 5;
+				if (post.description.includes(query)) score += 3;
+				if (post.tags.join(' ').toLowerCase().includes(query)) score += 3;
+				if (post.category.toLowerCase().includes(query)) score += 2;
+				if (post.body.toLowerCase().includes(query)) score += 1;
+				return score;
+			};
+
+			const updateSearch = (rawQuery) => {
+				const query = rawQuery.trim().toLowerCase();
+				const scored = searchablePosts
+					.map((post) => ({ id: post.id, score: scorePost(post, query) }))
+					.filter((item) => item.score > 0)
+					.sort((a, b) => b.score - a.score);
+				const visibleIds = new Set(scored.map((item) => item.id));
+
+				postElements.forEach((element) => {
+					const postId = element.getAttribute('data-post-id') ?? '';
+					const isVisible = !query || visibleIds.has(postId);
+					element.hidden = !isVisible;
+				});
+
+				const visibleCount = query ? scored.length : searchablePosts.length;
+				meta.textContent = query
+					? `${visibleCount} ${visibleCount === 1 ? 'result' : 'results'} for "${rawQuery.trim()}".`
+					: 'Start typing to filter posts.';
+				noResults.hidden = visibleCount !== 0;
+
+				const url = new URL(window.location.href);
+				if (query) {
+					url.searchParams.set('q', rawQuery.trim());
+				} else {
+					url.searchParams.delete('q');
+				}
+				window.history.replaceState({}, '', url);
+			};
+
+			const initialQuery = new URLSearchParams(window.location.search).get('q') ?? '';
+			if (initialQuery && searchInput) {
+				searchInput.value = initialQuery;
+			}
+			updateSearch(initialQuery);
+
+			searchInput?.addEventListener('input', (event) => updateSearch(event.currentTarget.value));
+		</script>
 	</body>
 </html>
 
@@ -81,6 +153,43 @@ const categories = [...new Set(posts.map(p => p.data.category).filter(Boolean))]
 		color: var(--text-secondary);
 		margin-bottom: 1.5em;
 		font-size: 1.1em;
+	}
+
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+
+	.search-form {
+		margin-bottom: 1.5em;
+	}
+
+	.search-form input {
+		width: 100%;
+		padding: 0.85em 1em;
+		font-size: 1rem;
+		border: 1px solid var(--border-bright);
+		border-radius: 10px;
+		background: var(--bg-deep);
+		color: var(--text-primary);
+	}
+
+	.search-form input:focus {
+		outline: 2px solid var(--accent);
+		outline-offset: 2px;
+	}
+
+	.search-meta {
+		margin: 0.55em 0 0;
+		font-size: 0.9rem;
+		color: var(--text-muted);
 	}
 	
 	.categories-filter {
@@ -120,6 +229,14 @@ const categories = [...new Set(posts.map(p => p.data.category).filter(Boolean))]
 		list-style: none;
 		padding: 0;
 		margin: 0;
+	}
+
+	.no-results {
+		margin: 2em 0 0;
+		padding: 1em;
+		background: var(--bg-surface);
+		border-radius: 10px;
+		color: var(--text-secondary);
 	}
 	
 	.post-item {

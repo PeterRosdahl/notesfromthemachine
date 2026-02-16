@@ -34,17 +34,6 @@ const encodedUrl = encodeURIComponent(url);
 				<path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/>
 			</svg>
 		</a>
-		<a 
-			href={`https://bsky.app/intent/compose?text=${encodedTitle}%20${encodedUrl}`}
-			target="_blank" 
-			rel="noopener noreferrer"
-			class="share-btn bluesky"
-			title="Share on Bluesky"
-		>
-			<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
-				<path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.138.022-.276.04-.415.056-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.05 9.271 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078a8.741 8.741 0 01-.415-.056c.14.017.279.036.415.056 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.206-.659-.298-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8z"/>
-			</svg>
-		</a>
 		<button 
 			class="share-btn copy-link" 
 			data-url={url}
@@ -67,11 +56,11 @@ const encodedUrl = encodeURIComponent(url);
 		gap: 0.75em;
 		margin: 2em 0;
 		padding: 1em 0;
-		border-top: 1px solid rgb(var(--gray-light), 0.3);
+		border-top: 1px solid var(--border);
 	}
 	.share-label {
 		font-size: 0.875rem;
-		color: rgb(var(--gray));
+		color: var(--text-muted);
 	}
 	.share-links {
 		display: flex;
@@ -86,9 +75,9 @@ const encodedUrl = encodeURIComponent(url);
 		border-radius: 8px;
 		text-decoration: none;
 		transition: transform 0.15s, opacity 0.15s, background 0.15s, color 0.15s, border-color 0.15s;
-		border: 1px solid rgb(var(--gray-light), 0.3);
+		border: 1px solid var(--border);
 		background: transparent;
-		color: rgb(var(--gray-dark));
+		color: var(--text-primary);
 		cursor: pointer;
 	}
 	.share-btn:hover {
@@ -96,12 +85,11 @@ const encodedUrl = encodeURIComponent(url);
 	}
 	.twitter:hover { background: #000; color: white; border-color: #000; }
 	.linkedin:hover { background: #0077b5; color: white; border-color: #0077b5; }
-	.bluesky:hover { background: #0085ff; color: white; border-color: #0085ff; }
 	.copy-link:hover { background: #1f2937; color: white; border-color: #1f2937; }
 	
 	.copy-feedback {
 		font-size: 0.8rem;
-		color: rgb(var(--accent));
+		color: var(--accent);
 		opacity: 0;
 		transition: opacity 0.2s;
 	}
@@ -111,11 +99,25 @@ const encodedUrl = encodeURIComponent(url);
 </style>
 
 <script>
-	document.querySelectorAll('.copy-link').forEach(btn => {
+	const copyText = async (text) => {
+		if (navigator.clipboard?.writeText) {
+			await navigator.clipboard.writeText(text);
+			return;
+		}
+
+		const tempInput = document.createElement('input');
+		tempInput.value = text;
+		document.body.appendChild(tempInput);
+		tempInput.select();
+		document.execCommand('copy');
+		tempInput.remove();
+	};
+
+	document.querySelectorAll('.copy-link').forEach((btn) => {
 		btn.addEventListener('click', async () => {
 			const url = btn.getAttribute('data-url');
 			if (url) {
-				await navigator.clipboard.writeText(url);
+				await copyText(url);
 				const feedback = btn.closest('.share-buttons')?.querySelector('.copy-feedback');
 				if (feedback) {
 					feedback.classList.add('show');

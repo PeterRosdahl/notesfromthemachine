@@ -1,0 +1,85 @@
+---
+import FormattedDate from './FormattedDate.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  posts: CollectionEntry<'blog'>[];
+}
+
+const { posts = [] } = Astro.props;
+if (posts.length === 0) {
+  return null;
+}
+---
+
+<section class="related-posts" aria-labelledby="related-title">
+  <h2 id="related-title">Related notes</h2>
+  <ul>
+    {posts.map((post) => (
+      <li>
+        <a href={`/blog/${post.id}/`}>
+          <span class="title">{post.data.title}</span>
+          <span class="meta">
+            <FormattedDate date={post.data.pubDate} />
+          </span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .related-posts {
+    margin-top: 3em;
+    padding-top: 2em;
+    border-top: 1px solid var(--border);
+  }
+
+  .related-posts h2 {
+    margin: 0 0 1em;
+    font-size: 1.2rem;
+  }
+
+  .related-posts ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.75em;
+  }
+
+  .related-posts a {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1em;
+    text-decoration: none;
+    padding: 0.85em 1em;
+    border-radius: 10px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+  }
+
+  .related-posts a:hover {
+    border-color: var(--border-bright);
+  }
+
+  .related-posts .title {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .related-posts .meta {
+    color: var(--text-muted);
+    font-size: 0.88em;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 600px) {
+    .related-posts a {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.3em;
+    }
+  }
+</style>

@@ -53,6 +53,20 @@
   --header-height: 80px;
 }
 
+:root[data-theme='dark'] {
+  --bg-deep: #111316;
+  --bg-surface: #1b1f24;
+  --bg-elevated: #252b33;
+  --text-primary: #f1f5f9;
+  --text-secondary: #d0d6df;
+  --text-muted: #9ea7b3;
+  --accent: #23a997;
+  --accent-glow: rgba(35, 169, 151, 0.15);
+  --accent-bright: #58c8b8;
+  --border: rgba(255, 255, 255, 0.12);
+  --border-bright: rgba(255, 255, 255, 0.22);
+}
+
 /* Reset & Base */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -71,6 +85,10 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
+}
+
+html[data-theme='dark'] {
+  color-scheme: dark;
 }
 
 /* Typography */
@@ -131,6 +149,18 @@ pre {
 pre > code {
   all: unset;
   font-family: inherit;
+}
+
+pre.astro-code {
+  padding: 1.15em 1.2em;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  overflow-x: auto;
+  line-height: 1.55;
+}
+
+.astro-code code {
+  font-size: 0.83em;
 }
 
 /* Blockquotes */
